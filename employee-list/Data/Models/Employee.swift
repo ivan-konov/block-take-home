@@ -17,6 +17,17 @@ struct Employee {
         case partTime = "PART_TIME"
         /// Contractor employee.
         case contractor = "CONTRACTOR"
+        
+        var displayString: String {
+            switch self {
+            case .fullTime:
+                return NSLocalizedString("Full Time", comment: "Full time Employee Type")
+            case .partTime:
+                return NSLocalizedString("Part Time", comment: "Part time Employee Type")
+            case .contractor:
+                return NSLocalizedString("Contractor", comment: "Contractor Employee Type")
+            }
+        }
     }
     
     /// The employee's ID.
@@ -84,5 +95,15 @@ extension Employee: Codable {
         case largePhoto = "photo_url_large"
         case team
         case type = "employee_type"
+    }
+}
+
+extension Employee: Hashable {
+    static func == (lhs: Employee, rhs: Employee) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.id)
     }
 }
