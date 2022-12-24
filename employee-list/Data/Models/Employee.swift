@@ -10,13 +10,13 @@ import Foundation
 /// A struct describing an employee.
 struct Employee {
     /// An enumeration describing the different employee types.
-    enum EmployeeType: String {
+    enum EmployeeType: String, Codable {
         /// Full time employee.
-        case fullTime
+        case fullTime = "FULL_TIME"
         /// Part time employee.
-        case partTime
+        case partTime = "PART_TIME"
         /// Contractor employee.
-        case contractor
+        case contractor = "CONTRACTOR"
     }
     
     /// The employee's ID.
@@ -30,9 +30,21 @@ struct Employee {
     /// The employee's short biography.
     let biography: String?
     /// The employee's photos for various sizes.
-    let photos: Photos?
+//    //let photos: Photos?
     /// The employee's team.
     let team: String
     /// The employee's type.
     let type: EmployeeType
+}
+
+extension Employee: Codable {
+    enum CodingKeys: String, CodingKey {
+        case id = "uuid"
+        case fullName = "full_name"
+        case phoneNumber = "phone_number"
+        case emailAddress = "email_address"
+        case biography
+        case team
+        case type = "employee_type"
+    }
 }

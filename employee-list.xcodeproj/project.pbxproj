@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		B677A4D129566ED500EDFCD7 /* Employee.swift in Sources */ = {isa = PBXBuildFile; fileRef = B677A4D029566ED500EDFCD7 /* Employee.swift */; };
 		B677A4D329566EDE00EDFCD7 /* Photos.swift in Sources */ = {isa = PBXBuildFile; fileRef = B677A4D229566EDE00EDFCD7 /* Photos.swift */; };
+		B677A4D729567D4000EDFCD7 /* EmployeeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B677A4D629567D4000EDFCD7 /* EmployeeList.swift */; };
+		B6CE76D72956890700ECF8B7 /* EmployeeListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE76D62956890700ECF8B7 /* EmployeeListService.swift */; };
 		B6EB3D4429558897009AEA65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EB3D4329558897009AEA65 /* AppDelegate.swift */; };
 		B6EB3D4629558897009AEA65 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EB3D4529558897009AEA65 /* SceneDelegate.swift */; };
 		B6EB3D4829558897009AEA65 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EB3D4729558897009AEA65 /* ViewController.swift */; };
@@ -20,6 +22,8 @@
 /* Begin PBXFileReference section */
 		B677A4D029566ED500EDFCD7 /* Employee.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Employee.swift; sourceTree = "<group>"; };
 		B677A4D229566EDE00EDFCD7 /* Photos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photos.swift; sourceTree = "<group>"; };
+		B677A4D629567D4000EDFCD7 /* EmployeeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeList.swift; sourceTree = "<group>"; };
+		B6CE76D62956890700ECF8B7 /* EmployeeListService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmployeeListService.swift; sourceTree = "<group>"; };
 		B6EB3D4029558897009AEA65 /* employee-list.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "employee-list.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6EB3D4329558897009AEA65 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B6EB3D4529558897009AEA65 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -53,9 +57,18 @@
 			isa = PBXGroup;
 			children = (
 				B677A4D029566ED500EDFCD7 /* Employee.swift */,
+				B677A4D629567D4000EDFCD7 /* EmployeeList.swift */,
 				B677A4D229566EDE00EDFCD7 /* Photos.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		B6CE76D52956890700ECF8B7 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				B6CE76D62956890700ECF8B7 /* EmployeeListService.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 		B6EB3D3729558897009AEA65 = {
@@ -77,6 +90,7 @@
 		B6EB3D4229558897009AEA65 /* employee-list */ = {
 			isa = PBXGroup;
 			children = (
+				B6CE76D52956890700ECF8B7 /* API */,
 				B677A4CE29566ED500EDFCD7 /* Data */,
 				B6EB3D4329558897009AEA65 /* AppDelegate.swift */,
 				B6EB3D4529558897009AEA65 /* SceneDelegate.swift */,
@@ -160,6 +174,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B677A4D729567D4000EDFCD7 /* EmployeeList.swift in Sources */,
+				B6CE76D72956890700ECF8B7 /* EmployeeListService.swift in Sources */,
 				B6EB3D4829558897009AEA65 /* ViewController.swift in Sources */,
 				B677A4D129566ED500EDFCD7 /* Employee.swift in Sources */,
 				B6EB3D4429558897009AEA65 /* AppDelegate.swift in Sources */,

@@ -19,6 +19,8 @@ struct Photos {
     
     private let photoURLs: [Size: URL]
     
+    // MARK: - Public API
+    
     /// Provides a photo `URL` for a given `Photos.Size`.
     /// - Parameter size: The desired size of the photo.
     /// - Returns: A `URL` for the photo.

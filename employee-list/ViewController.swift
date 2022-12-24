@@ -11,7 +11,14 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        EmployeeListService.getEmployeeList(from: .empty) { result in
+            switch result {
+            case .success(let employees):
+                print(employees)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 
 
