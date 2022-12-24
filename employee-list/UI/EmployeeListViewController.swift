@@ -38,12 +38,20 @@ final class EmployeeListViewController: UIViewController {
         return dataSource
     }()
     
+    private lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshEmployeeListData), for: .valueChanged)
+        return refreshControl
+    }()
+    
     private lazy var employeeListView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 70.0
         tableView.delegate = self
+        tableView.refreshControl = self.refreshControl
+        
         return tableView
     }()
     
@@ -69,6 +77,7 @@ final class EmployeeListViewController: UIViewController {
                 switch result {
                 case .success(let employees):
                     this.applySnaphot(with: employees)
+                    this.refreshControl.endRefreshing()
                 case .failure(let error):
                     // TODO: Show Error UI
                     break
@@ -99,10 +108,7 @@ final class EmployeeListViewController: UIViewController {
     
     private func setupNavigationBar() {
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        
         self.navigationItem.title = NSLocalizedString("Employees", comment: "Employee list navigation title")
-        let refreshItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshEmployeeListData))
-        self.navigationItem.rightBarButtonItem = refreshItem
     }
     
     private func setupEmployeeListView() {
