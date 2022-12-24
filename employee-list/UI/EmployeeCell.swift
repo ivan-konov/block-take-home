@@ -26,18 +26,18 @@ final class EmployeeCell: UITableViewCell {
     private lazy var photoView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         imageView.setContentHuggingPriority(.required, for: .horizontal)
         imageView.setContentHuggingPriority(.required, for: .vertical)
         return imageView
     }()
     
     private lazy var infoContainer: UIStackView = {
-        let container = UIStackView(arrangedSubviews: [self.nameLabel, self.additionalInfoContainer, self.biographyLabel])
+        let container = UIStackView(arrangedSubviews: [self.nameLabel, self.additionalInfoContainer ,self.biographyLabel])
         container.translatesAutoresizingMaskIntoConstraints = false
         container.spacing = 5.0
-        container.setCustomSpacing(10.0, after: self.self.additionalInfoContainer)
+        container.setCustomSpacing(15.0, after: self.additionalInfoContainer)
         container.axis = .vertical
         return container
     }()
@@ -46,7 +46,6 @@ final class EmployeeCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .preferredFont(forTextStyle: .headline)
-        label.textColor = .label
         return label
     }()
     
@@ -60,7 +59,7 @@ final class EmployeeCell: UITableViewCell {
     private lazy var teamLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .preferredFont(forTextStyle: .subheadline)
+        label.font = .preferredFont(for: .subheadline, weight: .bold)
         label.textColor = .secondaryLabel
         return label
     }()
@@ -78,7 +77,6 @@ final class EmployeeCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.font = .preferredFont(forTextStyle: .body)
-        label.textColor = .tertiaryLabel
         return label
     }()
     
@@ -109,12 +107,6 @@ final class EmployeeCell: UITableViewCell {
         ])
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        self.photoView.layer.cornerRadius = self.photoView.bounds.width / 2
-    }
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -125,16 +117,25 @@ final class EmployeeCell: UITableViewCell {
         self.photoView.image = nil
     }
     
+    // MARK: - Public API
+    
     func configure(with employee: Employee) {
         self.employee = employee
         
         self.nameLabel.text = employee.fullName
         self.teamLabel.text = employee.team
-        self.typeLabel.text = employee.type.displayString
+        self.typeLabel.text = employee.type.displayString.uppercased()
         self.biographyLabel.text = employee.biography
     }
     
+    /// Initates lod of the associated employee photo either from disk cache or network.
     func initatePhotoLoad() {
-        self.photoView.sd_setImage(with: self.employee?.photos?.photoURL(for: .small))
+        let placeholderImage = UIImage(systemName: "person.crop.circle")
+        let imageURL = self.employee?.photos?.photoURL(for: .small)
+        self.photoView.sd_setImage(with: imageURL, placeholderImage: placeholderImage) { [weak self] _, _, _, _ in
+            guard let this = self else { return }
+            
+            this.photoView.layer.cornerRadius = this.photoView.frame.width / 2
+        }
     }
 }
