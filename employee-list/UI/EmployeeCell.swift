@@ -45,7 +45,8 @@ final class EmployeeCell: UITableViewCell {
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
+        label.font = .preferredFont(forTextStyle: .headline)
+        label.textColor = .label
         return label
     }()
     
@@ -59,14 +60,16 @@ final class EmployeeCell: UITableViewCell {
     private lazy var teamLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 14.0)
+        label.font = .preferredFont(forTextStyle: .subheadline)
+        label.textColor = .secondaryLabel
         return label
     }()
     
     private lazy var typeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 14.0)
+        label.font = .preferredFont(forTextStyle: .subheadline)
+        label.textColor = .secondaryLabel
         return label
     }()
     
@@ -74,7 +77,8 @@ final class EmployeeCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = UIFont.systemFont(ofSize: 12.0)
+        label.font = .preferredFont(forTextStyle: .body)
+        label.textColor = .tertiaryLabel
         return label
     }()
     
