@@ -12,9 +12,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
+        
         let employeeListView = EmployeeListViewController()
+        let navigationController = UINavigationController(rootViewController: employeeListView)
+        
         self.window = UIWindow(windowScene: scene)
-        self.window?.rootViewController = employeeListView
+        self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
     }
 }

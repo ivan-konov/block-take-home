@@ -51,8 +51,15 @@ final class EmployeeListViewController: UIViewController {
         super.viewDidLoad()
         
         self.setupLayout()
+        self.setupNavigationBar()
         self.setupEmployeeListView()
-        
+        self.refreshEmployeeListData()
+    }
+    
+    // MARK: - Data Loading And Display
+    
+    @objc
+    private func refreshEmployeeListData() {
         EmployeeListService.getEmployeeList(from: .proper) { [weak self] result in
             guard let this = self else {
                 return
@@ -70,8 +77,6 @@ final class EmployeeListViewController: UIViewController {
         }
     }
     
-    // MARK: - Utilities
-    
     private func applySnaphot(with employees: [Employee]) {
         let section = Section(employees: employees)
         var snapshot = Snapshot()
@@ -79,6 +84,8 @@ final class EmployeeListViewController: UIViewController {
         snapshot.appendItems(section.employees)
         self.dataSource.apply(snapshot, animatingDifferences: true)
     }
+    
+    // MARK: - Utilities
     
     private func setupLayout() {
         self.view.addSubview(self.employeeListView)
@@ -88,6 +95,14 @@ final class EmployeeListViewController: UIViewController {
             self.employeeListView.topAnchor.constraint(equalTo: self.view.topAnchor),
             self.employeeListView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
         ])
+    }
+    
+    private func setupNavigationBar() {
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        
+        self.navigationItem.title = NSLocalizedString("Employees", comment: "Employee list navigation title")
+        let refreshItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshEmployeeListData))
+        self.navigationItem.rightBarButtonItem = refreshItem
     }
     
     private func setupEmployeeListView() {
