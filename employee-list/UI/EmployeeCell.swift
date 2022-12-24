@@ -6,9 +6,12 @@
 //
 
 import UIKit
+import SDWebImage
 
 final class EmployeeCell: UITableViewCell {
     static let reuseIdentifier = "EmployeeCell"
+    
+    private var employee: Employee? = nil
     
     private lazy var mainContainerView: UIStackView = {
         let container = UIStackView()
@@ -23,8 +26,8 @@ final class EmployeeCell: UITableViewCell {
     private lazy var photoView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.layer.cornerRadius = imageView.bounds.width / 2
-        imageView.backgroundColor = .red
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
         imageView.setContentHuggingPriority(.required, for: .horizontal)
         imageView.setContentHuggingPriority(.required, for: .vertical)
         return imageView
@@ -97,9 +100,15 @@ final class EmployeeCell: UITableViewCell {
             self.mainContainerView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
             self.mainContainerView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
             self.mainContainerView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
-            self.photoView.widthAnchor.constraint(equalToConstant: 50.0),
-            self.photoView.heightAnchor.constraint(equalToConstant: 50.0),
+            self.photoView.widthAnchor.constraint(equalToConstant: 70.0),
+            self.photoView.heightAnchor.constraint(equalToConstant: 70.0),
         ])
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.photoView.layer.cornerRadius = self.photoView.bounds.width / 2
     }
     
     override func prepareForReuse() {
@@ -109,12 +118,19 @@ final class EmployeeCell: UITableViewCell {
         self.teamLabel.text = nil
         self.typeLabel.text = nil
         self.biographyLabel.text = nil
+        self.photoView.image = nil
     }
     
     func configure(with employee: Employee) {
+        self.employee = employee
+        
         self.nameLabel.text = employee.fullName
         self.teamLabel.text = employee.team
         self.typeLabel.text = employee.type.displayString
         self.biographyLabel.text = employee.biography
+    }
+    
+    func initatePhotoLoad() {
+        self.photoView.sd_setImage(with: self.employee?.photos?.photoURL(for: .small))
     }
 }

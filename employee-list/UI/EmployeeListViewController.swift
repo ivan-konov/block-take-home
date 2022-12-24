@@ -43,6 +43,7 @@ final class EmployeeListViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 70.0
+        tableView.delegate = self
         return tableView
     }()
     
@@ -60,12 +61,7 @@ final class EmployeeListViewController: UIViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let employees):
-                    let section = Section(employees: employees)
-                    var snapshot = Snapshot()
-                    snapshot.appendSections([section])
-                    snapshot.appendItems(section.employees)
-                    this.dataSource.apply(snapshot, animatingDifferences: true)
-                    
+                    this.applySnaphot(with: employees)
                 case .failure(let error):
                     // TODO: Show Error UI
                     break
@@ -75,6 +71,14 @@ final class EmployeeListViewController: UIViewController {
     }
     
     // MARK: - Utilities
+    
+    private func applySnaphot(with employees: [Employee]) {
+        let section = Section(employees: employees)
+        var snapshot = Snapshot()
+        snapshot.appendSections([section])
+        snapshot.appendItems(section.employees)
+        self.dataSource.apply(snapshot, animatingDifferences: true)
+    }
     
     private func setupLayout() {
         self.view.addSubview(self.employeeListView)
@@ -88,5 +92,13 @@ final class EmployeeListViewController: UIViewController {
     
     private func setupEmployeeListView() {
         self.employeeListView.register(EmployeeCell.self, forCellReuseIdentifier: EmployeeCell.reuseIdentifier)
+    }
+}
+
+extension EmployeeListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let cell = cell as? EmployeeCell else { return }
+        
+        cell.initatePhotoLoad()
     }
 }

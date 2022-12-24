@@ -13,11 +13,27 @@
 		B6B5BB202956968300DE7AAA /* EmployeeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B5BB1F2956968300DE7AAA /* EmployeeListViewController.swift */; };
 		B6B5BB2229569BBD00DE7AAA /* EmployeeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B5BB2129569BBD00DE7AAA /* EmployeeCell.swift */; };
 		B6CE76D72956890700ECF8B7 /* EmployeeListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE76D62956890700ECF8B7 /* EmployeeListService.swift */; };
+		B6D039092956AB65005C21CF /* SDWebImage.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6D039082956AB65005C21CF /* SDWebImage.xcframework */; };
+		B6D0390A2956AB65005C21CF /* SDWebImage.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B6D039082956AB65005C21CF /* SDWebImage.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B6EB3D4429558897009AEA65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EB3D4329558897009AEA65 /* AppDelegate.swift */; };
 		B6EB3D4629558897009AEA65 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EB3D4529558897009AEA65 /* SceneDelegate.swift */; };
 		B6EB3D4D29558898009AEA65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6EB3D4C29558898009AEA65 /* Assets.xcassets */; };
 		B6EB3D5029558898009AEA65 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6EB3D4E29558898009AEA65 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B6D0390B2956AB65005C21CF /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B6D0390A2956AB65005C21CF /* SDWebImage.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		B677A4D029566ED500EDFCD7 /* Employee.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Employee.swift; sourceTree = "<group>"; };
@@ -26,6 +42,7 @@
 		B6B5BB1F2956968300DE7AAA /* EmployeeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeListViewController.swift; sourceTree = "<group>"; };
 		B6B5BB2129569BBD00DE7AAA /* EmployeeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeCell.swift; sourceTree = "<group>"; };
 		B6CE76D62956890700ECF8B7 /* EmployeeListService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmployeeListService.swift; sourceTree = "<group>"; };
+		B6D039082956AB65005C21CF /* SDWebImage.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SDWebImage.xcframework; path = Carthage/Build/SDWebImage.xcframework; sourceTree = "<group>"; };
 		B6EB3D4029558897009AEA65 /* employee-list.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "employee-list.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6EB3D4329558897009AEA65 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B6EB3D4529558897009AEA65 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -39,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6D039092956AB65005C21CF /* SDWebImage.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,11 +98,20 @@
 			path = API;
 			sourceTree = "<group>";
 		};
+		B6D039072956AB65005C21CF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B6D039082956AB65005C21CF /* SDWebImage.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B6EB3D3729558897009AEA65 = {
 			isa = PBXGroup;
 			children = (
 				B6EB3D4229558897009AEA65 /* employee-list */,
 				B6EB3D4129558897009AEA65 /* Products */,
+				B6D039072956AB65005C21CF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -121,6 +148,7 @@
 				B6EB3D3C29558897009AEA65 /* Sources */,
 				B6EB3D3D29558897009AEA65 /* Frameworks */,
 				B6EB3D3E29558897009AEA65 /* Resources */,
+				B6D0390B2956AB65005C21CF /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
