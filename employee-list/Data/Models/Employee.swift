@@ -30,7 +30,7 @@ struct Employee {
     /// The employee's short biography.
     let biography: String?
     /// The employee's photos for various sizes.
-//    //let photos: Photos?
+    let photos: Photos?
     /// The employee's team.
     let team: String
     /// The employee's type.
@@ -38,12 +38,50 @@ struct Employee {
 }
 
 extension Employee: Codable {
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        
+        id = try values.decode(UUID.self, forKey: .id)
+        fullName = try values.decode(String.self, forKey: .fullName)
+        phoneNumber = try values.decode(String.self, forKey: .phoneNumber)
+        emailAddress = try values.decode(String.self, forKey: .emailAddress)
+        biography = try values.decode(String.self, forKey: .biography)
+        
+        let smallPhotoURL = try values.decode(URL.self, forKey: .smallPhoto)
+        let largePhotoURL = try values.decode(URL.self, forKey: .largePhoto)
+        photos = Photos(photoURLs: [.small: smallPhotoURL, .large: largePhotoURL])
+        
+        team = try values.decode(String.self, forKey: .team)
+        type = try values.decode(EmployeeType.self, forKey: .type)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(fullName, forKey: .fullName)
+        try container.encode(phoneNumber, forKey: .phoneNumber)
+        try container.encode(emailAddress, forKey: .emailAddress)
+        try container.encode(biography, forKey: .biography)
+        
+        if let smallPhotoURL = photos?.photoURL(for: .small) {
+            try container.encode(smallPhotoURL, forKey: .smallPhoto)
+        }
+        if let largePhotoURL = photos?.photoURL(for: .large) {
+            try container.encode(largePhotoURL, forKey: .largePhoto)
+        }
+       
+        try container.encode(team, forKey: .team)
+        try container.encode(type, forKey: .type)
+    }
+    
     enum CodingKeys: String, CodingKey {
         case id = "uuid"
         case fullName = "full_name"
         case phoneNumber = "phone_number"
         case emailAddress = "email_address"
         case biography
+        case smallPhoto = "photo_url_small"
+        case largePhoto = "photo_url_large"
         case team
         case type = "employee_type"
     }

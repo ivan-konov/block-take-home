@@ -19,6 +19,12 @@ struct Photos {
     
     private let photoURLs: [Size: URL]
     
+    /// Initializer for a `Photos` instance with a size to photo URL mapping.
+    /// - Parameter photoURLs: The mapping of sizes and corresponding photo URLs.
+    init(photoURLs: [Size : URL]) {
+        self.photoURLs = photoURLs
+    }
+    
     // MARK: - Public API
     
     /// Provides a photo `URL` for a given `Photos.Size`.

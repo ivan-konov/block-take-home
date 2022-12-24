@@ -33,7 +33,7 @@ enum EmployeeListService {
             case .invalidURL:
                 return "The employee service was called with an invalid URL."
             case .serverProvidedError(let errorDescription):
-                return "The employee service returned error: \(errorDescription)."
+                return "The employee service returned an error: \(errorDescription)."
             }
         }
     }
