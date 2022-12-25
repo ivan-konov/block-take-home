@@ -8,11 +8,13 @@
 import UIKit
 import SDWebImage
 
+/// A table view cell displaying an employee's details.
 final class EmployeeCell: UITableViewCell {
     private struct Strings {
         static let biographyTitle = NSLocalizedString("Biography:", comment: "A title for an employee biography label.")
     }
     
+    /// The reuse identifier for the cell to be used by a `UITableView`.
     static let reuseIdentifier = "EmployeeCell"
     private var employee: Employee? = nil
     
@@ -157,6 +159,8 @@ final class EmployeeCell: UITableViewCell {
     
     // MARK: - Public API
     
+    /// Configure the cell's content with an employee's data.
+    /// - Parameter employee: The employee whose details are to be displayed.
     func configure(with employee: Employee) {
         self.employee = employee
         

@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// A section displaying a list of employees in a table or collection view.
+/// A section displaying a list of employees in a `UITableView` or `UICollectionView`.
 final class EmployeeListSection {
     /// The unique id.
     var id = UUID()
