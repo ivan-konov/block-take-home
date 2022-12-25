@@ -22,11 +22,14 @@ final class EmployeeListDataProvider {
     /// The current state of the provider.
     @Published var state: State = .loading
     
+    /// The desiderd endpoint to call the `EmployeeListService` with.
+    var endpoint: EmployeeListService.Endpoints = .proper
+    
     /// Request employee data from the employee service.
     func getEmployeeList() {
         self.state = .loading
         
-        EmployeeListService.getEmployeeList(from: .malformed) { [weak self] result in
+        EmployeeListService.getEmployeeList(from: self.endpoint) { [weak self] result in
             guard let this = self else {
                 return
             }

@@ -9,6 +9,20 @@ import Foundation
 
 /// A service returning employee list data.
 enum EmployeeListService {
+    private struct Strings {
+        static let malformedListErrorDescription = NSLocalizedString("The employee list returned from the service was malformed.",
+                                                                     comment: "An error description for a malformed employee list data returned from the server.")
+        static let emptyListErrorDescription = NSLocalizedString("The employee list returned from the service was empty.",
+                                                                 comment: "An error description for an empty employee list data returned from the server.")
+        static let invalidURLErrorDescription = NSLocalizedString("The employee service was called with an invalid URL.",
+                                                  comment: "An error description for an invalid URL used when requesting employee list data returned from the server.")
+        static let serverProvidedErrorDescriptionFormat = NSLocalizedString("The employee service returned an error: %@",
+                                                                 comment: "An error description format for an error returned from the server.")
+        static let properEndpointTitle = NSLocalizedString("Proper Format Format", comment: "A title for a service endpoint providing properly formatted data to be displayed in UI.")
+        static let malformedEndpointTitle = NSLocalizedString("Malformed List", comment: "A title for a service endpoint providing a malformed list of data to be displayed in UI.")
+        static let emptyEndpointTitle = NSLocalizedString("Empty List", comment: "A title for a service endpoint providing an empty list to be displayed in UI.")
+    }
+    
     typealias EmployeeListServiceResult = Result<[Employee], EmployeeListServiceError>
     typealias EmployeeListServiceCompletion = (EmployeeListServiceResult) -> Void
     
@@ -27,19 +41,19 @@ enum EmployeeListService {
         var localizedDescription: String {
             switch self {
             case .malformedList:
-                return "The employee list returned from the service was malformed."
+                return Strings.malformedListErrorDescription
             case .emptyList:
-                return "The employee list returned from the service was empty."
+                return Strings.emptyListErrorDescription
             case .invalidURL:
-                return "The employee service was called with an invalid URL."
+                return Strings.invalidURLErrorDescription
             case .serverProvidedError(let errorDescription):
-                return "The employee service returned an error: \(errorDescription)."
+                return String.localizedStringWithFormat(Strings.serverProvidedErrorDescriptionFormat, errorDescription)
             }
         }
     }
 
     /// Endpoints of the employees service.
-    enum Endpoints {
+    enum Endpoints: CaseIterable {
         /// An endpoint returning a properly formatted employee list.
         case proper
         /// An endpoint returning a malformed employee list.
@@ -56,6 +70,18 @@ enum EmployeeListService {
                 return URL(string: "https://s3.amazonaws.com/sq-mobile-interview/employees_malformed.json")
             case .empty:
                 return URL(string: "https://s3.amazonaws.com/sq-mobile-interview/employees_empty.json")
+            }
+        }
+        
+        /// A title for the endpoint to be displayed in UI elements.
+        var displayTitle: String {
+            switch self {
+            case .proper:
+                return Strings.properEndpointTitle
+            case .malformed:
+                return Strings.malformedEndpointTitle
+            case .empty:
+                return Strings.emptyEndpointTitle
             }
         }
     }

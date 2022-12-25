@@ -8,10 +8,12 @@
 import UIKit
 import Combine
 
+/// A view controller displayling a list of employees.
 final class EmployeeListViewController: UIViewController {
     private struct Strings {
         static let loadingLabelTitle = NSLocalizedString("Loading...", comment: "A label indicating a loading state of en employee list UI.")
         static let navigationTitle = NSLocalizedString("Employees", comment: "Employee list navigation title")
+        static let endpointsMenuTitle = NSLocalizedString("Endpoints", comment: "Employee list navigation title")
     }
     
     private typealias DataSource =  UITableViewDiffableDataSource<EmployeeListSection, Employee>
@@ -151,6 +153,18 @@ final class EmployeeListViewController: UIViewController {
         
         let refreshItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshEmployeeList))
         self.navigationItem.rightBarButtonItem = refreshItem
+    
+        let menuItems: [UIAction] = EmployeeListService.Endpoints.allCases.map { endpoint in
+            UIAction(title: endpoint.displayTitle) { [weak self] _ in
+                guard let this = self else { return }
+                
+                this.dataProvider.endpoint = endpoint
+                this.dataProvider.getEmployeeList()
+            }
+        }
+        let menu = UIMenu(title: Strings.endpointsMenuTitle, image: nil, identifier: nil, options: [], children: menuItems)
+        let endpointMenuItem = UIBarButtonItem(title: Strings.endpointsMenuTitle, menu: menu)
+        self.navigationItem.leftBarButtonItem = endpointMenuItem
     }
     
     private func setupSubscriptions() {
