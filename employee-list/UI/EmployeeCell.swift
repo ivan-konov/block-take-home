@@ -9,9 +9,14 @@ import UIKit
 import SDWebImage
 
 final class EmployeeCell: UITableViewCell {
-    static let reuseIdentifier = "EmployeeCell"
+    private struct Strings {
+        static let biographyTitle = NSLocalizedString("Biography:", comment: "A title for an employee biography label.")
+    }
     
+    static let reuseIdentifier = "EmployeeCell"
     private var employee: Employee? = nil
+    
+    // MARK: - UI
     
     private lazy var mainContainerView: UIStackView = {
         let container = UIStackView()
@@ -34,7 +39,13 @@ final class EmployeeCell: UITableViewCell {
     }()
     
     private lazy var infoContainer: UIStackView = {
-        let container = UIStackView(arrangedSubviews: [self.nameLabel, self.additionalInfoContainer ,self.biographyLabel])
+        let container = UIStackView(arrangedSubviews: [
+            self.nameLabel,
+            self.additionalInfoContainer,
+            self.biographyTitleLabel,
+            self.biographySeparator,
+            self.biographyLabel,
+        ])
         container.translatesAutoresizingMaskIntoConstraints = false
         container.spacing = 5.0
         container.setCustomSpacing(15.0, after: self.additionalInfoContainer)
@@ -72,13 +83,32 @@ final class EmployeeCell: UITableViewCell {
         return label
     }()
     
+    private lazy var biographyTitleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 1
+        label.text = Strings.biographyTitle
+        label.font = .preferredFont(for: .subheadline, weight: .bold)
+        return label
+    }()
+    
+    private lazy var biographySeparator: UIView = {
+        let view =  UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .secondaryLabel
+        return view
+    }()
+    
     private lazy var biographyLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.font = .preferredFont(forTextStyle: .body)
+        label.textColor = .secondaryLabel
         return label
     }()
+    
+    // MARK: - Initialization and Reuse
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -104,6 +134,7 @@ final class EmployeeCell: UITableViewCell {
             self.mainContainerView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
             self.photoView.widthAnchor.constraint(equalToConstant: 70.0),
             self.photoView.heightAnchor.constraint(equalToConstant: 70.0),
+            self.biographySeparator.heightAnchor.constraint(equalToConstant: 0.5),
         ])
     }
     
@@ -115,6 +146,13 @@ final class EmployeeCell: UITableViewCell {
         self.typeLabel.text = nil
         self.biographyLabel.text = nil
         self.photoView.image = nil
+        self.toggleBiographyDisplay(hidden: false)
+    }
+    
+    private func toggleBiographyDisplay(hidden: Bool) {
+        self.biographyTitleLabel.isHidden = hidden
+        self.biographySeparator.isHidden = hidden
+        self.biographyLabel.isHidden = hidden
     }
     
     // MARK: - Public API
@@ -125,7 +163,13 @@ final class EmployeeCell: UITableViewCell {
         self.nameLabel.text = employee.fullName
         self.teamLabel.text = employee.team
         self.typeLabel.text = employee.type.displayString.uppercased()
-        self.biographyLabel.text = employee.biography
+        if let biography = employee.biography {
+            self.toggleBiographyDisplay(hidden: false)
+            self.biographyLabel.text = biography
+        } else {
+            self.toggleBiographyDisplay(hidden: true)
+            self.biographyLabel.text = nil
+        }
     }
     
     /// Initates lod of the associated employee photo either from disk cache or network.
